@@ -4,7 +4,7 @@ import { LogoutButton } from "./logout-button";
 import { BrandName } from "./brand-name";
 
 const Navbar = () => {
-  const isAuthenticated = false; // TODO: Replace with actual authentication state from Auth.js
+  const isAuthenticated = true; // TODO: Replace with actual authentication state from Auth.js
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b-2 border-border bg-background">

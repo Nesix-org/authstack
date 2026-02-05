@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/layout";
 import { Database, Lock, Zap, ArrowRight } from "lucide-react";
+import { FeatureCard } from "@/components/layout/feature-card";
 
 const Page = () => {
   return (
@@ -104,24 +105,6 @@ const Page = () => {
         </div>
       </footer>
     </Layout>
-  );
-};
-
-interface FeatureCardProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
-  return (
-    <div className="group border-2 border-border bg-background p-8 shadow-sharp transition-all duration-150 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-sharp-hover">
-      <div className="mb-6 inline-block border-2 border-foreground p-4">
-        {icon}
-      </div>
-      <h3 className="mb-3 font-heading text-xl font-bold">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
-    </div>
   );
 };
 

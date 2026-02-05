@@ -2,13 +2,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Eye, EyeOff } from "lucide-react";
+import { FormField } from "./form-field";
 
 export function RegisterForm () {
-
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [confirmPass, setConfirmPass] = useState<boolean>(false)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -30,75 +28,48 @@ export function RegisterForm () {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="name" className="font-space text-sm uppercase tracking-wider">
-          Full Name
-        </Label>
-        <Input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="John Doe"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <FormField 
+        id="name"
+        label="Name"
+        placeholder="Omoshola E"
+        type="text"
+        value={formData.name}
+        onChange={handleChange}
+      />
 
-      <div className="space-y-2">
-        <Label htmlFor="email" className="font-space text-sm uppercase tracking-wider">
-          Email
-        </Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="john@example.com"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
+      <FormField 
+        id="email"
+        label="Email"
+        type="email"
+        placeholder="omoshola@gmail.com"
+        value={formData.email}
+        onChange={handleChange}
+      />
 
-      <div className="space-y-2">
-        <Label htmlFor="password" className="font-space text-sm uppercase tracking-wider">
-          Password
-        </Label>
-        <div className="relative">
-          <Input
-            id="password"
-            name="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="••••••••"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-          </button>
-        </div>
-      </div>
+      <FormField 
+        id="password"
+        label="Password"
+        type={showPassword ? 'text' : 'password'}
+        placeholder="***********"
+        hasPassword
+        showPassword={showPassword}
+        value={formData.password}
+        onChange={handleChange}
+        onClick={() => setShowPassword(!showPassword)}
+      />
 
-      <div className="space-y-2">
-        <Label htmlFor="confirmPassword" className="font-space text-sm uppercase tracking-wider">
-          Confirm Password
-        </Label>
-        <Input
-          id="confirmPassword"
-          name="confirmPassword"
-          type="password"
-          placeholder="••••••••"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-      </div>
+      <FormField 
+        id="confirmPassword"
+        label="Confirm Password"
+        type={confirmPass ? 'text' : 'password'}
+        placeholder="***********"
+        hasPassword
+        showPassword={confirmPass}
+        value={formData.confirmPassword}
+        onChange={handleChange}
+        onClick={() => setConfirmPass(!confirmPass)}
+      />
 
       <Button type="submit" className="w-full" size="lg">
         Create Account

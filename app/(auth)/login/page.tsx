@@ -1,4 +1,5 @@
 import { LoginForm } from "@/components/form/login-form";
+import { AuthProvider } from "@/components/layout/auth-providers";
 import { BrandName } from "@/components/layout/brand-name";
 import Link from "next/link";
 
@@ -32,6 +33,8 @@ const SignIn = () => {
           </p>
         
           <LoginForm />
+
+          <AuthProvider />
 
           <p className="mt-8 text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}

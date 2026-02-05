@@ -1,4 +1,5 @@
 import { RegisterForm } from "@/components/form/register-form";
+import { AuthProvider } from "@/components/layout/auth-providers";
 import { BrandName } from "@/components/layout/brand-name";
 import { RegisterLogo } from "@/components/layout/register-logo";
 import Link from "next/link";
@@ -18,6 +19,8 @@ function SignUp () {
           </p>
 
           <RegisterForm />
+
+          <AuthProvider />
 
           <p className="mt-8 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
