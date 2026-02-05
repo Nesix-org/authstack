@@ -7,10 +7,10 @@ interface LayoutProps {
   showNavbar?: boolean;
 }
 
-const Layout = ({ children, isAuthenticated = false, showNavbar = true }: LayoutProps) => {
+const Layout = ({ children, showNavbar = true }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
-      {showNavbar && <Navbar isAuthenticated={isAuthenticated} />}
+      <Navbar  />
       <main className={showNavbar ? "pt-16" : ""}>{children}</main>
     </div>
   );

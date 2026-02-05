@@ -14,19 +14,19 @@ const Page = () => {
             <br />
             <span className="inline-block border-b-4 border-foreground">AUTHENTICATION</span>
           </h1>
-          <p className="mx-auto mt-8 max-w-2xl animate-fade-in text-lg text-muted-foreground md:text-xl">
+          <p className="mx-auto mt-8 max-w-2xl animate-fade-in text-lg text-muted-foreground md:text-xl font-space">
             Practice building real authentication flows with Neon, Prisma, Next.js, and Auth.js. 
             Sharp, minimal, production-ready.
           </p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/signup">
-              <Button size="lg" className="w-full sm:w-auto">
+            <Link href="/register">
+              <Button size="lg" className="w-full sm:w-auto font-space">
                 Get Started
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Link href="/signin">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
+            <Link href="/login">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto font-space">
                 Sign In
               </Button>
             </Link>
@@ -44,7 +44,7 @@ const Page = () => {
             {["NEON", "PRISMA", "NEXT.JS", "AUTH.JS", "BCRYPT"].map((tech) => (
               <span
                 key={tech}
-                className="font-heading text-xl font-bold tracking-tight md:text-2xl"
+                className="font-space text-xl font-bold tracking-tight md:text-2xl"
               >
                 {tech}
               </span>
@@ -86,7 +86,7 @@ const Page = () => {
           <p className="mx-auto mb-10 max-w-xl text-muted-foreground">
             Create your account and start practicing full-stack authentication patterns.
           </p>
-          <Link href="/signup">
+          <Link href="/register">
             <Button size="lg">
               Create Account
               <ArrowRight className="ml-2 h-5 w-5" />
