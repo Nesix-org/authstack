@@ -1,7 +1,7 @@
 import { RegisterForm } from "@/components/form/register-form";
-import { AuthProvider } from "@/components/layout/auth-providers";
+import { AuthProvider } from "@/components/auth/auth-providers";
 import { BrandName } from "@/components/layout/brand-name";
-import { RegisterLogo } from "@/components/layout/register-logo";
+import { RegisterLogo } from "@/components/auth/register-logo";
 import Link from "next/link";
 
 

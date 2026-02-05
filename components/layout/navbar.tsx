@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { LogoutButton } from "./logout-button";
+import { LogoutButton } from "../auth/logout-button";
 import { BrandName } from "./brand-name";
 
 const Navbar = () => {

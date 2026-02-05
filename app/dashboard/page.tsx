@@ -1,6 +1,6 @@
 'use client'
 
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { DashboardLayout } from "@/components/dashboard/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -8,7 +8,7 @@ import { ImageIcon, Sparkles } from "lucide-react";
 import { useState } from "react";
 import Navbar from "@/components/layout/navbar";
 import { posts } from "@/lib/data";
-import { PostCard } from "@/components/layout/post-card";
+import { PostCard } from "@/components/post/post-card";
 
 
 const Dashboard = () => {
