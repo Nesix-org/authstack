@@ -3,19 +3,32 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
+import { useRouter } from "next/navigation";
 
 export function LoginForm () {
-
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement signin logic with Auth.js
-    console.log("Sign in submitted:", formData);
+    
+    try {      
+      // TODO: Implement signin logic with Auth.js
+      console.log("Sign in submitted:", formData);
+
+
+      // stimulate api call
+      await new Promise((resolve) => setTimeout(resolve, 5000))
+
+      router.push('/dashboard')
+      
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

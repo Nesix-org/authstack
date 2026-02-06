@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
+import { useRouter } from "next/navigation";
 
 export function RegisterForm () {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [confirmPass, setConfirmPass] = useState<boolean>(false)
   const [formData, setFormData] = useState({
@@ -14,10 +16,19 @@ export function RegisterForm () {
     confirmPassword: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement signup logic with Auth.js and bcrypt
-    console.log("Sign up submitted:", formData);
+    try {
+      // TODO: Implement signup logic with Auth.js and bcrypt
+      console.log("Sign up submitted:", formData);
+
+      // stimulate api call
+      await new Promise((resolve) => setTimeout(resolve, 5000))
+
+      router.push('/username')
+    } catch (error) {
+      return error
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
