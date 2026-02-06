@@ -30,7 +30,6 @@ const Profile = () => {
   };
 
   return (
-    <Layout isAuthenticated>
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-2xl">
           {/* Header */}
@@ -180,7 +179,7 @@ const Profile = () => {
           </form>
         </div>
       </div>
-    </Layout>
+
   );
 };
 

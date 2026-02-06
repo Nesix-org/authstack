@@ -13,7 +13,7 @@ export function AuthProvider () {
         <ProviderBtn 
           provider="google"
           icon={<GithubIcon size={16}/>}
-          label="Github"
+          label="Google"
         />
         <ProviderBtn 
           provider="github"

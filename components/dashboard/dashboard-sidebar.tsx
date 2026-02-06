@@ -1,5 +1,6 @@
-import { Home, Search, Bell, Mail, Bookmark, User, Settings, LogOut, PenSquare } from "lucide-react";
-// import { NavLink } from "@/components/NavLink";
+'use client'
+
+import { Home, Search, Bell, Mail, Bookmark, User, Settings, LogOut, PenSquare, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -14,6 +15,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   useSidebar,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -44,22 +46,26 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`border-r-2 border-border bg-background ${collapsed ? "w-20" : "w-64"}`}
+      className="border-r-2 border-border bg-background fixed h-screen top-0 left-0 z-50 transition-transform lg:translate-x-0"
       collapsible="icon"
     >
-      <SidebarContent className="px-3 py-4">
+      <SidebarContent className="px-3 py-4 relative overflow-hidden">
         {/* Logo */}
-        <div className={`mb-6 ${collapsed ? "px-2" : "px-3"}`}>
+        <div className={`mb-6 flex flex-col md:flex-row items-center justify-between  ${collapsed ? "px-2" : "px-3"}`}>
           <div className="flex h-10 w-10 items-center justify-center border-2 border-foreground bg-foreground">
-            <span className="font-heading text-xl font-bold text-background">X</span>
+            <span className="font-space text-xl font-bold text-background">A</span>
           </div>
+
+          <SidebarTrigger className="absolute top-0 right-1 p-2 z-auto rounded-full bg-background border-2 border-border text-muted-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ">
+            <Menu size={24} />
+          </SidebarTrigger>
         </div>
 
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.title} className="mb-1 last:mb-0">
                   <SidebarMenuButton
                     asChild
                     isActive={isActive(item.url)}
@@ -74,7 +80,7 @@ export function AppSidebar() {
                     >
                       <item.icon className="h-6 w-6 shrink-0" />
                       {!collapsed && (
-                        <span className="font-heading text-lg">{item.title}</span>
+                        <span className="font-space text-sm">{item.title}</span>
                       )}
                     </Link>
                   </SidebarMenuButton>
