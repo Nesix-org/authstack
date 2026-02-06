@@ -65,6 +65,7 @@ const Dashboard = () => {
               />
               <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
                 <div className="flex items-center gap-4">
+                  {/* This should be clickable for user to upload an image */}
                   <button className="text-muted-foreground transition-colors hover:text-foreground">
                     <ImageIcon className="h-5 w-5" />
                   </button>
