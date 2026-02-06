@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+// User Model
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  username String? @unique
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts Post[]
+  comments Comment[]
+  likes Like[]
+  bookmarks Bookmark[]
+  reposts Repost[]
+}
+
+// Post Model
+model Post {
+  id String @id @default(uuid())
+  content String
+  mediaUrl String?
+  authorId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author User @relation(fields: [authorId], references: [id],  onDelete: Cascade)
+
+
+  comment Comment[]
+  likes Like[]
+  bookmarks Bookmark[]
+  reposts Repost[]
+}
+
+model Comment {
+  id String @id @default(uuid())
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId String
+  userId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+
+model Like {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  userId String
+  postId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId]) // one like per user on a post
+  @@index([postId])
+  @@index([userId])
+}
+
+model Bookmark {
+  id String @id @default(uuid())
+  postId String
+  userId String
+  createdAt DateTime @default(now())
+
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId]) // one bookmark per user on a post
+  @@index([postId])
+  @@index([userId])
+}
+
+
+model Repost {
+  id String @id @default(uuid())
+  userId String
+  postId String
+  createdAt DateTime @default(now())
+
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId]) // one repost per user on a post
+  @@index([postId]) // indexing
+  @@index([userId])
+}
