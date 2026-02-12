@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 export function UsernameForm () {
-  const router = useRouter()
+  const router = useTransitionRouter()
   const [userName, setUserName] = useState<string>('')
 
   const handleSubmit = async (e: React.SubmitEvent) => {

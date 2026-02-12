@@ -1,7 +1,8 @@
-import Link from "next/link";
+// import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { LogoutButton } from "../auth/logout-button";
 import { BrandName } from "./brand-name";
+import {Link} from 'next-view-transitions'
 
 const Navbar = () => {
   const isAuthenticated = true; // TODO: Replace with actual authentication state from Auth.js

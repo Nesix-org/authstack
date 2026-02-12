@@ -1,7 +1,7 @@
 import { LoginForm } from "@/components/form/login-form";
 import { AuthProvider } from "@/components/auth/auth-providers";
 import { BrandName } from "@/components/layout/brand-name";
-import Link from "next/link";
+import {Link} from 'next-view-transitions'
 
 
 const SignIn = () => {

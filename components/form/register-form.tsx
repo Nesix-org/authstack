@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 export function RegisterForm () {
-  const router = useRouter()
+  // const router = useRouter()
+  const router = useTransitionRouter()
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [confirmPass, setConfirmPass] = useState<boolean>(false)
   const [formData, setFormData] = useState({

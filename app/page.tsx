@@ -1,4 +1,5 @@
-import Link from "next/link";
+// import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/layout";
 import { Database, Lock, Zap, ArrowRight } from "lucide-react";
