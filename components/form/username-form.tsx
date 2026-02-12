@@ -4,6 +4,20 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
 import { useTransitionRouter } from "next-view-transitions";
+import {easeOut, motion} from 'motion/react'
+
+const container = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+      ease: easeOut,
+    },
+  },
+};
 
 export function UsernameForm () {
   const router = useTransitionRouter()
@@ -43,11 +57,17 @@ export function UsernameForm () {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <FormField 
+    <motion.form
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      onSubmit={handleSubmit}
+      className="space-y-6"
+    >
+      <FormField
         label="Username"
-        id='username'
-        type='text'
+        id="username"
+        type="text"
         placeholder="authstack_1"
         value={userName}
         onChange={handleChange}
@@ -57,6 +77,6 @@ export function UsernameForm () {
       <Button type="submit" className="w-full" size="lg">
         Continue
       </Button>
-    </form>
-  )
+    </motion.form>
+  );
 }
