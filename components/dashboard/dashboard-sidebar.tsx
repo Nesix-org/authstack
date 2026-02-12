@@ -18,7 +18,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
+import {Link} from "next-view-transitions";
 
 const mainItems = [
   { title: "Home", url: "/dashboard", icon: Home },

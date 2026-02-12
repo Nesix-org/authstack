@@ -126,3 +126,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  transition-duration: .5s;
+}

@@ -3,10 +3,24 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import {easeOut, motion} from 'motion/react'
+
+const container = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+      ease: easeOut,
+    },
+  },
+};
 
 export function LoginForm () {
-  const router = useRouter()
+  const router = useTransitionRouter()
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -39,7 +53,7 @@ export function LoginForm () {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <motion.form variants={container} initial='hidden' animate='visible' onSubmit={handleSubmit} className="space-y-6">
       <FormField 
         label="email"
         id='email'
@@ -67,6 +81,6 @@ export function LoginForm () {
       <Button type="submit" className="w-full" size="lg">
         Sign In
       </Button>
-    </form>
+    </motion.form>
   )
 }
