@@ -54,9 +54,10 @@ model User {
   id String @id @default(uuid())
   name String
   email String @unique
-  password String?
+  password String? // optional for OAuth users
   username String? @unique
-  image String?
+  image String? // profile picture URL
+  emailVerified DateTime? // for email verification status
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
