@@ -1,5 +1,6 @@
 "use client"
 
+import {signIn} from 'next-auth/react'
 
 interface ProviderBtnProps {
   provider: string
@@ -12,12 +13,14 @@ export function ProviderBtn ({ provider, icon: Icon, label }: ProviderBtnProps )
     <button
       type="button"
       className="w-full rounded-lg border border-muted bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-black hover:text-white cursor-pointer duration-300"
-      // onClick={() => signIn(provider, {})}
+      onClick={() =>
+        signIn(provider, { callbackUrl: "/dashboard", redirect: true })
+      }
     >
       <div className="flex items-center justify-center gap-1 font-space">
         {Icon}
         <span>Continue with {label}</span>
       </div>
     </button>
-  )
+  );
 }
