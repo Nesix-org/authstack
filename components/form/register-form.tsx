@@ -34,12 +34,44 @@ export function RegisterForm () {
     e.preventDefault();
     try {
       // TODO: Implement signup logic with Auth.js and bcrypt
-      console.log("Sign up submitted:", formData);
+
+      const {name, email, password, confirmPassword} = formData
+
+      if (!name && !email && !password && !confirmPassword) {
+        return {
+          error: "Please fill in all fields"
+        }
+      }
+
+      if (password !== confirmPassword) {
+        console.error("Passwords do not match")
+        // return {
+        //   error: 'Passwords do not match'
+        // }
+      }
+
+      const newUser = {
+        name, 
+        email,
+        password
+      }
+
+      const response = await fetch('/api/register', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newUser)
+      })
+
+
+
+
 
       // stimulate api call
-      await new Promise((resolve) => setTimeout(resolve, 5000))
+      // await new Promise((resolve) => setTimeout(resolve, 5000))
 
-      router.push('/username')
+      // router.push('/username')
     } catch (error) {
       return error
     }
