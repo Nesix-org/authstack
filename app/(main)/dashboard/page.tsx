@@ -9,6 +9,7 @@ import { useState } from "react";
 import { posts } from "@/lib/data";
 import { PostCard } from "@/components/post/post-card";
 import { RightSidebar } from "@/components/dashboard/right-sidebar";
+import { ScrollBar } from "@/components/dashboard/scroll-bar";
 
 
 const Dashboard = () => {
@@ -24,6 +25,7 @@ const Dashboard = () => {
 
   return (
     <section className="flex min-h-screen w-full relative max-w-full overflow-x-hidden">
+      <ScrollBar />
       <div className="border-b-2 border-border bg-red-300 flex-1">
         {/* Feed Tabs */}
         <div className="sticky top-0 z-40 hidden border-b-2 border-border bg-stone-100 backdrop-blur-sm lg:block">

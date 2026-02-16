@@ -3,10 +3,24 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import {easeOut, motion} from 'motion/react'
+
+
+const container = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {opacity: 1, y: 0,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+      ease: easeOut,
+    },
+  },
+}
 
 export function RegisterForm () {
-  const router = useRouter()
+  // const router = useRouter()
+  const router = useTransitionRouter()
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [confirmPass, setConfirmPass] = useState<boolean>(false)
   const [formData, setFormData] = useState({
@@ -39,7 +53,7 @@ export function RegisterForm () {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <motion.form variants={container} initial='hidden' animate='visible' onSubmit={handleSubmit} className="space-y-4">
       <FormField 
         id="name"
         label="Name"
@@ -85,6 +99,6 @@ export function RegisterForm () {
       <Button type="submit" className="w-full" size="lg">
         Create Account
       </Button>
-    </form>
+    </motion.form>
   )
 }

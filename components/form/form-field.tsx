@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import {motion} from 'motion/react'
 
 
 type FormFieldProps = {
@@ -16,7 +17,10 @@ type FormFieldProps = {
   onClick?: () => void
 } & InputHTMLAttributes<HTMLInputElement>
 
-
+const container = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {opacity: 1, y: 0,},
+}
 
 export function FormField ({
   label,
@@ -30,9 +34,12 @@ export function FormField ({
   ...props 
 }:FormFieldProps) {
   return (
-    <div className="space-y-2">
+    <motion.div variants={container} className="space-y-2">
       <div className="flex items-center justify-between">
-        <Label htmlFor={id} className="font-space text-sm uppercase tracking-wider">
+        <Label
+          htmlFor={id}
+          className="font-space text-sm uppercase tracking-wider"
+        >
           {label}
         </Label>
         {link && (
@@ -59,10 +66,14 @@ export function FormField ({
             onClick={onClick}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
           >
-            {showPassword ? <Eye className="h-5 w-5" />  : <EyeOff className="h-5 w-5" /> }
+            {showPassword ? (
+              <Eye className="h-5 w-5" />
+            ) : (
+              <EyeOff className="h-5 w-5" />
+            )}
           </button>
         )}
       </div>
-    </div>
-  )
+    </motion.div>
+  );
 }
