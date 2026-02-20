@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { FormField } from "./form-field";
 import { useTransitionRouter } from "next-view-transitions";
 import {easeOut, motion} from 'motion/react'
+import { signIn } from "next-auth/react";
 
 const container = {
   hidden: { opacity: 0, y: 20 },
@@ -32,13 +33,22 @@ export function LoginForm () {
     
     try {      
       // TODO: Implement signin logic with Auth.js
-      console.log("Sign in submitted:", formData);
+      // console.log("Sign in submitted:", formData);
+
+      const {email, password} = formData
+
+      if (!email && !password) {
+        console.error('email and password id required')
+        return
+      }
+
+      await signIn('credentials', {email, password, callbackUrl: '/explore', redirect: true})
 
 
       // stimulate api call
-      await new Promise((resolve) => setTimeout(resolve, 5000))
+      // await new Promise((resolve) => setTimeout(resolve, 5000))
 
-      router.push('/dashboard')
+      // router.push('/dashboard')
       
     } catch (error) {
       console.log(error)
