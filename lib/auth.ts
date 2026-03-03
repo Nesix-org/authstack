@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import {comparePassword} from "@/lib/helper";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -29,11 +30,13 @@ export const authOptions: NextAuthOptions = {
           where: { email },
         });
 
+        if(!user) {
+          throw new Error("Invalid email or password");
+
+        }
+
         // check if user's password is correct
-        const isValidPassword = await bcrypt.compare(
-          password,
-          user?.password as string,
-        );
+        const isValidPassword = await comparePassword(password, user.password as string);
 
         if (!user || !isValidPassword) {
           throw new Error("Invalid email or password");
