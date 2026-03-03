@@ -11,13 +11,23 @@ export async function proxy(req: NextRequest) {
     const isLoggedIn: boolean = !!session?.user;
     const hasUsername: boolean = !!session?.user.username
     const isUsernamePage: boolean =  pathname.startsWith('/username')
-    const isAuthenticated: boolean = authRoutes.some(route => pathname.startsWith(route))
+    const isAuthenticationRoutes: boolean = authRoutes.some(route => pathname.startsWith(route))
 
-    console.log(isAuthenticated)
+    if (!isLoggedIn && !isAuthenticationRoutes) {
+      return NextResponse.redirect(new URL('/login', req.url))
+    } 
 
+    // check if user already has username, if not redirect to username route
+    if(isLoggedIn && !hasUsername && !isUsernamePage) {
+      return NextResponse.redirect(new URL('/username', req.url))
+    }
 
+    // if all conditions are met, route to dashboard
+    if(isLoggedIn && hasUsername && isAuthenticationRoutes) {
+      return NextResponse.redirect(new URL('/dashboard', req.url))
+    }
 
-    return NextResponse.next()
+    http: return NextResponse.next();
 }
 
 export const config = {

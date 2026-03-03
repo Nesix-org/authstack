@@ -42,7 +42,7 @@ export function LoginForm () {
         return
       }
 
-      await signIn('credentials', {email, password, callbackUrl: '/explore', redirect: true})
+      await signIn('credentials', {email, password, callbackUrl: '/dashboard', redirect: true})
 
 
       // stimulate api call

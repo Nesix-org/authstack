@@ -43,7 +43,7 @@ export function UsernameForm () {
     setUserName(e.target.value);
 
     if(e.target.value.length < 4) {
-      return null
+      return 
     }
 
     // console.log(e.target.value)

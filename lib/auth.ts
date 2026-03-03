@@ -3,7 +3,6 @@ import prisma from "./prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
 import {comparePassword} from "@/lib/helper";
 
 export const authOptions: NextAuthOptions = {
@@ -56,6 +55,17 @@ export const authOptions: NextAuthOptions = {
         token.name = user.name;
         token.email = user.email;
         token.username = user.username
+      }
+
+      // this check for valid username and update the username on Username update
+      if (token?.id && !token.username) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id },
+        });
+
+        if (dbUser) {
+          token.username = dbUser.username;
+        }
       }
 
       return token;
