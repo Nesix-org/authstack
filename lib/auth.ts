@@ -3,7 +3,7 @@ import prisma from "./prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Github from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import {comparePassword} from "@/lib/helper";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -29,11 +29,13 @@ export const authOptions: NextAuthOptions = {
           where: { email },
         });
 
+        if(!user) {
+          throw new Error("Invalid email or password");
+
+        }
+
         // check if user's password is correct
-        const isValidPassword = await bcrypt.compare(
-          password,
-          user?.password as string,
-        );
+        const isValidPassword = await comparePassword(password, user.password as string);
 
         if (!user || !isValidPassword) {
           throw new Error("Invalid email or password");
@@ -47,7 +49,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ user, token }) {
+    async jwt({ user, token } ) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -55,12 +57,22 @@ export const authOptions: NextAuthOptions = {
         token.username = user.username
       }
 
+      // this check for valid username and update the username on Username update
+      if (token?.id && !token.username) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id },
+        });
+
+        if (dbUser) {
+          token.username = dbUser.username;
+        }
+      }
+
       return token;
     },
     async session({ token, session }) {
       if (token && session.user) {
-        (session.user as { id?: string; email?: string, name: string, }).id =
-          token.id as string;
+        session.user.id = token.id
         session.user.email = token.email
         session.user.name = token.name
         session.user.username = token.username
