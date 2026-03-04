@@ -22,20 +22,54 @@ const container = {
 export function UsernameForm () {
   const router = useTransitionRouter()
   const [userName, setUserName] = useState<string>('')
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const username = userName.trim().toLowerCase();
+    if (username.length < 3) {
+      setError("Username must be at least 3 characters.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
     try {
-      // TODO: Implement signin logic with Auth.js
-      console.log("Sign in submitted:", userName);
-  
-      // stimulate api call
-      await new Promise((resolve) => setTimeout(resolve, 5000))
+      const response = await fetch("/api/username", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: userName.toLowerCase() }),
+      });
 
-      router.push('/dashboard')
-      
-    } catch (error) {
-      console.log(error)
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : null;
+      console.log("Username updated successfully:", data.user);
+
+      if (!response.ok) {
+        const message =
+          typeof data?.error === "string"
+            ? data.error
+            : "Failed to update username";
+        throw new Error(message);
+      }
+      router.push("/dashboard");
+
+      // // TODO: Implement signin logic with Auth.js
+      // console.log("Sign in submitted:", userName);
+
+      // // stimulate api call
+      // await new Promise((resolve) => setTimeout(resolve, 5000))
+
+      // router.push('/dashboard')
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,8 +108,8 @@ export function UsernameForm () {
         onBlur={handleBlur}
       />
 
-      <Button type="submit" className="w-full" size="lg">
-        Continue
+      <Button type="submit" className="w-full" size="lg" disabled={loading}>
+        {loading ? "Saving..." : "Continue"}
       </Button>
     </motion.form>
   );
