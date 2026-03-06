@@ -46,9 +46,7 @@ export function UsernameForm () {
         body: JSON.stringify({ username: userName.toLowerCase() }),
       });
 
-      const text = await response.text();
-      const data = text ? JSON.parse(text) : null;
-      console.log("Username updated successfully:", data.user);
+      const data = await response.json();
 
       if (!response.ok) {
         const message =
@@ -57,6 +55,7 @@ export function UsernameForm () {
             : "Failed to update username";
         throw new Error(message);
       }
+      console.log("Username updated successfully:", data.user);
       router.push("/dashboard");
 
       // // TODO: Implement signin logic with Auth.js
