@@ -28,8 +28,7 @@ export function UsernameForm () {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const username = userName.trim().toLowerCase();
-    if (username.length < 3) {
+    if (userName.trim().length < 3) {
       setError("Username must be at least 3 characters.");
       return;
     }
@@ -43,7 +42,7 @@ export function UsernameForm () {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: userName.toLowerCase() }),
+        body: JSON.stringify({ userName }),
       });
 
       const data = await response.json();

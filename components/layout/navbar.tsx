@@ -1,11 +1,12 @@
-// import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { LogoutButton } from "../auth/logout-button";
 import { BrandName } from "./brand-name";
 import {Link} from 'next-view-transitions'
+import { Session } from "@/lib/helper";
 
-const Navbar = () => {
-  const isAuthenticated = true; // TODO: Replace with actual authentication state from Auth.js
+const Navbar = async () => {
+  const session = await Session()
+  const isAuthenticated = session?.user
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b-2 border-border bg-background">

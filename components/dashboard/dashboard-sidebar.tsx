@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import {Link} from "next-view-transitions";
+import { signOut } from "next-auth/react";
 
 const mainItems = [
   { title: "Home", url: "/dashboard", icon: Home },
@@ -123,7 +124,7 @@ export function AppSidebar() {
             </div>
           )}
           {!collapsed && (
-            <button className="p-1 text-muted-foreground hover:text-foreground">
+            <button className="p-1 text-muted-foreground hover:text-foreground cursor-pointer" onClick={() => signOut()}>
               <LogOut className="h-5 w-5" />
             </button>
           )}

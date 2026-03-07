@@ -26,7 +26,7 @@ export async function PATCH(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session?.user?.id) {
+    if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = session.user.id;
@@ -57,6 +57,7 @@ export async function PATCH(req: NextRequest) {
       { message: "Username updated successfully" },
       { status: 200 },
     );
+
   } catch (err: unknown) {
     // Username uniqueness error (Postgres unique violation via Prisma)
     if (isPrismaUniqueConstraintError(err) && err.code === "P2002") {
