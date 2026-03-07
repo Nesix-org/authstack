@@ -55,17 +55,10 @@ export function UsernameForm () {
             : "Failed to update username";
         throw new Error(message);
       }
-      console.log("Username updated successfully:", data.user);
+
       router.push("/dashboard");
 
-      // // TODO: Implement signin logic with Auth.js
-      // console.log("Sign in submitted:", userName);
-
-      // // stimulate api call
-      // await new Promise((resolve) => setTimeout(resolve, 5000))
-
-      // router.push('/dashboard')
-    } catch (error: unknown) {
+    } catch (error: Error | unknown) {
       setError(error instanceof Error ? error.message : "Something went wrong");
     } finally {
       setLoading(false);
@@ -78,15 +71,12 @@ export function UsernameForm () {
     if(e.target.value.length < 4) {
       return 
     }
-
-    // console.log(e.target.value)
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (userName.trim() === '') {
       console.log("Username cannot be empty");
     }
-    // console.log(e.target.value)
   }
 
   return (
@@ -106,6 +96,7 @@ export function UsernameForm () {
         onChange={handleChange}
         onBlur={handleBlur}
       />
+      {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <Button type="submit" className="w-full" size="lg" disabled={loading}>
         {loading ? "Saving..." : "Continue"}
