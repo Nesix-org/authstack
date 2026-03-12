@@ -24,6 +24,7 @@ export async function proxy(req: NextRequest) {
       return NextResponse.redirect(new URL('/username', req.url))
     }
 
+    // 
     if (token && hasUsername && AUTH_ROUTES.includes(pathname)) {
       return NextResponse.redirect(new URL('/dashboard', req.url))
     }

@@ -37,12 +37,13 @@ export function UsernameForm () {
     setError(null);
 
     try {
+      console.log("Submitting username:", userName);
       const response = await fetch("/api/username", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userName }),
+        body: JSON.stringify({userName}),
       });
 
       const data = await response.json();
