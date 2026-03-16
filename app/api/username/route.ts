@@ -5,7 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth/next";
 
 const BodySchema = z.object({
-  username: z
+  userName: z
     .string()
     .min(3)
     .max(20)
@@ -32,7 +32,14 @@ export async function PATCH(req: NextRequest) {
     const userId = session.user.id;
 
     const reqBody = await req.json();
-    const { username } = BodySchema.parse(reqBody);
+    const parsedResult = BodySchema.safeParse(reqBody);
+
+    if (!parsedResult.success) {
+      return NextResponse.json({message: 'Failed to parse request data'})
+    }
+
+    const username = parsedResult.data.userName
+   
 
     // 1. check if username already exist. if exist return error
     const findUsername = await prisma.user.findUnique({
@@ -69,7 +76,7 @@ export async function PATCH(req: NextRequest) {
 
     // Zod validation
     if (err instanceof ZodError) {
-      return NextResponse.json({ error: err.issues }, { status: 400 });
+      return NextResponse.json({ error: err.message}, { status: 400 });
     }
 
     return NextResponse.json({ error: "Server error" }, { status: 500 });
