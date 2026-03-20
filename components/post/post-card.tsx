@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 interface Post {
-  id: number;
+  id: string;
   author: { name: string; username: string; initials: string };
   content: string;
   timestamp: string;
