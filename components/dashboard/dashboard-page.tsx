@@ -11,8 +11,6 @@ import { PostProps } from "@/app/types";
 const DashboardPage = ({ posts }:PostProps) => {
   const [activeTab, setActiveTab] = useState<"forYou" | "following">("forYou");
 
-  console.log("From component");
-
   const handleNewPost = (newPost: FeedPost) => {
     console.log(newPost);
   };

@@ -6,7 +6,11 @@ export default async function Dashboard() {
   const posts: FormattedPost[] = await getPosts()
 
   if(!posts) {
-
+    return (
+      <div>
+        No Post yet
+      </div>
+    )
   }
 
   return (
