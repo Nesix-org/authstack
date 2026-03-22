@@ -21,7 +21,7 @@ type CreatePostProps = {
   onPostCreated: (post: FeedPost) => void;
 };
 
-export default function CreatePost({ onPostCreated }: CreatePostProps) {
+export default function CreatePost() {
  const [newPost, setNewPost] = useState('');
   const [isPosting, setIsPosting] = useState(false);
 
@@ -49,7 +49,7 @@ export default function CreatePost({ onPostCreated }: CreatePostProps) {
             throw new Error("Failed to create post");
         }
         const createdPost: FeedPost = await response.json();
-        onPostCreated(createdPost);
+
         setNewPost("");
 
     } catch (error) {

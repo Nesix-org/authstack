@@ -1,19 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {useState } from "react";
+import { useState } from "react";
 import { RightSidebar } from "@/components/dashboard/right-sidebar";
 import { ScrollBar } from "@/components/dashboard/scroll-bar";
 import Post from "@/components/post/post";
-import CreatePost, { FeedPost } from "@/components/post/createPost";
+import CreatePost from "@/components/post/createPost";
 import { PostProps } from "@/app/types";
 
-const DashboardPage = ({ posts }:PostProps) => {
+const DashboardPage = ({ posts }: PostProps) => {
   const [activeTab, setActiveTab] = useState<"forYou" | "following">("forYou");
-
-  const handleNewPost = (newPost: FeedPost) => {
-    console.log(newPost);
-  };
 
   return (
     <section className="flex min-h-screen w-full relative max-w-full overflow-x-hidden">
@@ -46,7 +42,7 @@ const DashboardPage = ({ posts }:PostProps) => {
         </div>
 
         {/* Create Post Section */}
-        <CreatePost onPostCreated={handleNewPost} />
+        <CreatePost />
 
         {/* Posts Feed */}
         <Post posts={posts} />

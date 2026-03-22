@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { formatPost } from "@/lib/formatPost";
+
+
 
 export async function POST(request: NextRequest) {
     try {
@@ -10,6 +11,8 @@ export async function POST(request: NextRequest) {
         if (!content || !content.trim()) {
             return NextResponse.json({ error: 'Content cannot be empty' }, { status: 400 });
         }
+
+
 
         const authorId = "clh9j1l8c0000qz6m9v5y7x3"; // Replace with actual authenticated user ID
 
@@ -26,9 +29,7 @@ export async function POST(request: NextRequest) {
             },
         });
 
-        const formattedPost = formatPost(newPost);
-
-        return NextResponse.json(formattedPost, { status: 201 });
+        return NextResponse.json({ status: 201 });
            
     } catch (error) {
         console.error('Error creating post:', error);
@@ -49,10 +50,9 @@ export async function GET() {
         createdAt: 'desc',
       },
     });
+    
 
-    const formattedPosts = posts.map(formatPost);
-
-    return NextResponse.json(formattedPosts);
+    return NextResponse.json(posts);
   } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });

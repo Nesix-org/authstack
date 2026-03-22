@@ -1,29 +1,22 @@
 'use client'
 
+import { Post} from "@/app/types";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { createInitial } from "@/lib/formatPost";
 import { Heart, MessageCircle, Share2, Bookmark, MoreHorizontal,  } from "lucide-react";
 import { useState } from "react";
 
 
 
-interface Post {
-  id: string;
-  author: { name: string; username: string; initials: string };
-  content: string;
-  timestamp: string;
-  likes: number;
-  comments: number;
-  isLiked: boolean;
-  isBookmarked: boolean;
-}
 
-export const PostCard = ({ post }: { post: Post }) => {
-  const [isLiked, setIsLiked] = useState(post.isLiked);
-  const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
-  const [likes, setLikes] = useState(post.likes);
+
+export const PostCard = ({ post }: {post: Post}) => {
+  const [isLiked, setIsLiked] = useState(post._count.likes);
+  const [isBookmarked, setIsBookmarked] = useState(post._count.bookmarks);
+  const [likes, setLikes] = useState(post._count.likes);
 
   const handleLike = () => {
-    setIsLiked(!isLiked);
+    // setIsLiked(!isLiked);
     setLikes(isLiked ? likes - 1 : likes + 1);
   };
 
@@ -33,15 +26,19 @@ export const PostCard = ({ post }: { post: Post }) => {
       <div className="flex items-start gap-3 p-4 pb-0">
         <Avatar className="h-10 w-10 border-2 border-foreground">
           <AvatarFallback className="bg-muted text-foreground font-heading font-bold text-sm">
-            {post.author.initials}
+            {createInitial(post.author.name)}
           </AvatarFallback>
         </Avatar>
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <p className="font-heading font-bold">{post.author.name}</p>
-            <p className="text-sm text-muted-foreground">{post.author.username}</p>
+            <p className="text-sm text-muted-foreground">
+              {post.author.username}
+            </p>
             <span className="text-muted-foreground">·</span>
-            <span className="text-sm text-muted-foreground">{post.timestamp}</span>
+            <span className="text-sm text-muted-foreground">
+              {post.createdAt.toLocaleTimeString()}
+            </span>
           </div>
         </div>
         <button className="p-1 text-muted-foreground transition-colors hover:text-foreground">
@@ -60,7 +57,9 @@ export const PostCard = ({ post }: { post: Post }) => {
           <button
             onClick={handleLike}
             className={`flex items-center gap-2 transition-colors ${
-              isLiked ? "text-destructive" : "text-muted-foreground hover:text-destructive"
+              isLiked
+                ? "text-destructive"
+                : "text-muted-foreground hover:text-destructive"
             }`}
           >
             <Heart className={`h-5 w-5 ${isLiked ? "fill-current" : ""}`} />
@@ -68,19 +67,23 @@ export const PostCard = ({ post }: { post: Post }) => {
           </button>
           <button className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground">
             <MessageCircle className="h-5 w-5" />
-            <span className="text-sm font-medium">{post.comments}</span>
+            <span className="text-sm font-medium">{post._count.comment}</span>
           </button>
           <button className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground">
             <Share2 className="h-5 w-5" />
           </button>
         </div>
         <button
-          onClick={() => setIsBookmarked(!isBookmarked)}
+          // onClick={() => setIsBookmarked()}
           className={`transition-colors ${
-            isBookmarked ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+            isBookmarked
+              ? "text-foreground"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          <Bookmark className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`} />
+          <Bookmark
+            className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`}
+          />
         </button>
       </div>
     </article>

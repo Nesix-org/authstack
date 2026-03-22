@@ -1,8 +1,7 @@
-import { FormattedPost } from "@/app/types";
+import { Post } from "@/app/types";
 import prisma from "./prisma";
-import { formatPost } from "./formatPost";
 
-export async function getPosts(): Promise<FormattedPost[]> {
+export async function getPosts(): Promise<Post[]> {
   try {
     const posts = await prisma.post.findMany({
       include: {
@@ -16,7 +15,7 @@ export async function getPosts(): Promise<FormattedPost[]> {
       },
     });
 
-    return posts.map(formatPost);
+    return posts;
   } catch (error) {
     console.log(error);
     return [];
