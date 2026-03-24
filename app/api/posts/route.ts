@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { formatPost } from "@/lib/formatPost";
 
@@ -52,8 +52,8 @@ export async function GET() {
       },
     });
     
-
-    return NextResponse.json(posts);
+const formattedPosts = posts.map(formatPost);
+    return NextResponse.json(formattedPosts);
   } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });

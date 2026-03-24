@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState, useCallback } from "react";
 import { RightSidebar } from "@/components/dashboard/right-sidebar";
 import { ScrollBar } from "@/components/dashboard/scroll-bar";
+import CreatePost from "@/components/post/createPost";
 import Post from "@/components/post/post";
-import CreatePost, { FeedPost } from "@/components/post/createPost";
+import type { FeedPost } from "@/components/post/types";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<"forYou" | "following">("forYou");
@@ -86,3 +87,4 @@ const Dashboard = () => {
     </section>
   );
 }
+export default Dashboard;

@@ -7,17 +7,6 @@ import { ImageIcon, Sparkles } from "lucide-react";
 import { postAction } from "./postAction";
 import SubmitButton from "./submitButton";
 
-export type FeedPost = {
-  id: string;
-  author: { name: string; username: string; initials: string };
-  content: string;
-  timestamp: string;
-  likes: number;
-  comments: number;
-  isLiked: boolean;
-  isBookmarked: boolean;
-};
-
 type CreatePostProps = {
   onPostSuccess?: () => Promise<void> | void;
 };
