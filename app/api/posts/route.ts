@@ -1,41 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { formatPost } from "@/lib/formatPost";
+
+// export async function POST(request: NextRequest) {
+//     try {
+//         const body = await request.json();
+//         const { content } = body;
+
+//         if (!content || !content.trim()) {
+//             return NextResponse.json({ error: 'Content cannot be empty' }, { status: 400 });
+//         }
 
 
 
-export async function POST(request: NextRequest) {
-    try {
-        const body = await request.json();
-        const { content } = body;
+//         const authorId = "clh9j1l8c0000qz6m9v5y7x3"; 
 
-        if (!content || !content.trim()) {
-            return NextResponse.json({ error: 'Content cannot be empty' }, { status: 400 });
-        }
+//         const newPost = await prisma.post.create({
+//             data: {
+//                 content: content.trim(),
+//                 authorId,
+//             },
+//             include: {
+//                 author: true,
+//                 _count: {
+//                     select: { likes: true, comment: true, bookmarks: true },
+//                 },
+//             },
+//         });
 
+//         const formattedPost = formatPost(newPost);
 
-
-        const authorId = "clh9j1l8c0000qz6m9v5y7x3"; // Replace with actual authenticated user ID
-
-        const newPost = await prisma.post.create({
-            data: {
-                content: content.trim(),
-                authorId,
-            },
-            include: {
-                author: true,
-                _count: {
-                    select: { likes: true, comment: true, bookmarks: true },
-                },
-            },
-        });
-
-        return NextResponse.json({ status: 201 });
+//         return NextResponse.json(formattedPost, { status: 201 });
            
-    } catch (error) {
-        console.error('Error creating post:', error);
-        return NextResponse.json({ error: 'Failed to create post' }, { status: 500 });
-    }
-}
+//     } catch (error) {
+//         console.error('Error creating post:', error);
+//         return NextResponse.json({ error: 'Failed to create post' }, { status: 500 });
+//     }
+// }
 
 export async function GET() {
   try {
