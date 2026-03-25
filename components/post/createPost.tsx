@@ -2,25 +2,27 @@
 
 import { useState, useRef } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ImageIcon, Sparkles } from "lucide-react";
 import { postAction } from "./postAction";
 import SubmitButton from "./submitButton";
+import { getInitials } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 type CreatePostProps = {
   onPostSuccess?: () => Promise<void> | void;
 };
 
-export default function CreatePost({ onPostSuccess }: CreatePostProps) {
+
+export default function CreatePost({ onPostSuccess }: CreatePostProps ) {
   const [newPost, setNewPost] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  const user = {
-    name: "John Doe",
-    username: "@johndoe",
-    avatar: "",
-    initials: "JD",
-  };
+  const { data: session } = useSession();
+  const user = session?.user || { name: null, username: null };
+
+  const name = user.name || user.username || "User";
+  const userInitials = getInitials(name);
 
   // const handlePost = async () => {
   //   if (!newPost.trim()) return;
@@ -53,9 +55,8 @@ export default function CreatePost({ onPostSuccess }: CreatePostProps) {
     <div className="border-b-2 border-border p-4 bg-stone-50">
       <div className="flex gap-4">
         <Avatar className="h-12 w-12 border-2 border-foreground">
-          <AvatarImage src={user.avatar} />
           <AvatarFallback className="bg-primary text-primary-foreground font-heading font-bold">
-            {user.initials}
+            {userInitials}
           </AvatarFallback>
         </Avatar>
 
