@@ -10,7 +10,7 @@ interface LayoutProps {
 const Layout = ({ children, showNavbar = true }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar  />
+      <Navbar />
       <main className={showNavbar ? "pt-16" : ""}>{children}</main>
     </div>
   );

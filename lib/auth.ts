@@ -49,21 +49,30 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ user, token } ) {
+    async jwt({ user, token }) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.username = user.username
+        token.username = user.username;
       }
 
-      // this check for valid username and update the username on Username update
-      if (token?.id && !token.username) {
+      // Rehydrate auth fields from the database so the session stays current.
+      if (token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            username: true,
+          },
         });
 
         if (dbUser) {
+          token.id = dbUser.id;
+          token.name = dbUser.name;
+          token.email = dbUser.email;
           token.username = dbUser.username;
         }
       }
@@ -72,10 +81,10 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ token, session }) {
       if (token && session.user) {
-        session.user.id = token.id
-        session.user.email = token.email
-        session.user.name = token.name
-        session.user.username = token.username
+        session.user.id = token.id;
+        session.user.email = token.email;
+        session.user.name = token.name;
+        session.user.username = token.username;
       }
 
       return session;
