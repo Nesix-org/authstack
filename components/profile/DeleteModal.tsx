@@ -1,26 +1,30 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 interface DeleteAccountModalProps {
-    isOpen: boolean
-    onClose: () => void;
+  isOpen: boolean;
+  onClose: () => void;
   onDelete: () => Promise<void>;
 }
 
-const DeleteAccountModal = ({isOpen,onClose, onDelete }: DeleteAccountModalProps) => {
-//   const [isOpen, setIsOpen] = useState(false);
+const DeleteAccountModal = ({
+  isOpen,
+  onClose,
+  onDelete,
+}: DeleteAccountModalProps) => {
+  //   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     setLoading(true);
     await onDelete();
     setLoading(false);
-    onClose()
+    onClose();
     // setIsOpen(false);
   };
-if(!open) return null
+  if (!open) return null;
   return (
     <>
       {isOpen && (
@@ -30,13 +34,18 @@ if(!open) return null
               Confirm Account Deletion
             </h3>
             <p className="mb-6 text-sm text-muted-foreground">
-              Are you sure you want to delete your account? This action cannot be undone.
+              Are you sure you want to delete your account? This action cannot
+              be undone.
             </p>
             <div className="flex justify-end gap-4">
               <Button variant="outline" onClick={onClose} disabled={loading}>
                 Cancel
               </Button>
-              <Button variant="destructive" onClick={handleDelete} disabled={loading}>
+              <Button
+                variant="destructive"
+                onClick={handleDelete}
+                disabled={loading}
+              >
                 {loading ? "Deleting..." : "Delete"}
               </Button>
             </div>

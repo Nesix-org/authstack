@@ -1,9 +1,8 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import ProfilePageClient from "@/components/profile/ProfilePageClient";
+import { Session } from "@/lib/session";
 
 async function ProfilePage() {
-  const session = await getServerSession(authOptions);
+  const session = await Session()
 
   const profile = {
     email: session?.user?.email ?? "",
