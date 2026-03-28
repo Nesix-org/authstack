@@ -20,6 +20,8 @@ import {
 import { usePathname } from "next/navigation";
 import {Link} from "next-view-transitions";
 import { signOut } from "next-auth/react";
+import { getInitials } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 
 const mainItems = [
   { title: "Home", url: "/dashboard", icon: Home },
@@ -35,15 +37,14 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const user = session?.user || { name: null, username: null };
+
+  const name = user.name || user.username || "User";
+  const username = user.username || "user";
+  const userInitials = getInitials(name);
 
   const isActive = (path: string) => pathname === path;
-
-  // Mock user
-  const user = {
-    name: "John Doe",
-    username: "@johndoe",
-    initials: "JD",
-  };
 
   return (
     <Sidebar
@@ -52,9 +53,13 @@ export function AppSidebar() {
     >
       <SidebarContent className="px-3 py-4 relative overflow-hidden">
         {/* Logo */}
-        <div className={`mb-6 flex flex-col md:flex-row items-center justify-between  ${collapsed ? "px-2" : "px-3"}`}>
+        <div
+          className={`mb-6 flex flex-col md:flex-row items-center justify-between  ${collapsed ? "px-2" : "px-3"}`}
+        >
           <div className="flex h-10 w-10 items-center justify-center border-2 border-foreground bg-foreground">
-            <span className="font-space text-xl font-bold text-background">A</span>
+            <span className="font-space text-xl font-bold text-background">
+              A
+            </span>
           </div>
 
           <SidebarTrigger className="absolute top-0 right-1 p-2 z-auto rounded-full bg-background border-2 border-border text-muted-foreground hover:bg-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary ">
@@ -75,7 +80,9 @@ export function AppSidebar() {
                     <Link
                       href={item.url}
                       className={`flex items-center gap-4 rounded-none px-3 py-3 transition-all hover:bg-muted ${
-                        isActive(item.url) ? "border-2 border-foreground bg-muted font-bold" : ""
+                        isActive(item.url)
+                          ? "border-2 border-foreground bg-muted font-bold"
+                          : ""
                       }`}
                       // activeClassName=""
                     >
@@ -114,17 +121,22 @@ export function AppSidebar() {
         >
           <Avatar className="h-10 w-10 border-2 border-foreground">
             <AvatarFallback className="bg-primary text-primary-foreground font-heading font-bold">
-              {user.initials}
+              {userInitials}
             </AvatarFallback>
           </Avatar>
           {!collapsed && (
             <div className="flex-1 overflow-hidden">
-              <p className="truncate font-heading font-bold">{user.name}</p>
-              <p className="truncate text-sm text-muted-foreground">{user.username}</p>
+              <p className="truncate font-heading font-bold">{name}</p>
+              <p className="truncate text-sm text-muted-foreground">
+                @{username}
+              </p>
             </div>
           )}
           {!collapsed && (
-            <button className="p-1 text-muted-foreground hover:text-foreground cursor-pointer" onClick={() => signOut()}>
+            <button
+              className="p-1 text-muted-foreground hover:text-foreground cursor-pointer"
+              onClick={() => signOut()}
+            >
               <LogOut className="h-5 w-5" />
             </button>
           )}

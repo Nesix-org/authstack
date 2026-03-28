@@ -4,13 +4,12 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Menu } from "lucide-react";
 import { AppSidebar } from "./dashboard-sidebar";
 
-
 interface DashboardLayoutProps {
   children: ReactNode;
   showRightSidebar?: boolean;
 }
 
-export function DashboardLayout({ children}: DashboardLayoutProps) {
+export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <SidebarProvider
       defaultOpen
