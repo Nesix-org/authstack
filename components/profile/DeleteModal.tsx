@@ -24,7 +24,7 @@ const DeleteAccountModal = ({
     onClose();
     // setIsOpen(false);
   };
-  if (!open) return null;
+  // if (!open) return null;
   return (
     <>
       {isOpen && (
