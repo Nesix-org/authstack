@@ -1,39 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { RightSidebar } from "@/components/dashboard/right-sidebar";
 import { ScrollBar } from "@/components/dashboard/scroll-bar";
-import CreatePost from "@/components/post/createPost";
 import Post from "@/components/post/post";
-import type { FeedPost } from "@/components/post/types";
+import CreatePost from "@/components/post/createPost";
+import { PostProps } from "@/app/types";
 
-const Dashboard = () => {
+const DashboardPage = ({ posts }: PostProps) => {
   const [activeTab, setActiveTab] = useState<"forYou" | "following">("forYou");
-  const [posts, setPosts] = useState<FeedPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // const handleNewPost = (newPost: FeedPost) => {
-  //   setPosts((prev) => [newPost, ...prev]);
-  // };
-   const loadPosts = useCallback(async () => {
-     setLoading(true);
-     try {
-       const res = await fetch("/api/posts");
-       if (!res.ok) throw new Error("Failed to load posts");
-       const data = await res.json();
-       setPosts(data);
-     } catch (err) {
-       setError(err instanceof Error ? err.message : "An error occurred");
-     } finally {
-       setLoading(false);
-     }
-   }, []);
-
-  useEffect(() => {
-    loadPosts();
-  }, [loadPosts]);
 
   return (
     <section className="flex min-h-screen w-full relative max-w-full overflow-x-hidden">
@@ -66,10 +42,10 @@ const Dashboard = () => {
         </div>
 
         {/* Create Post Section */}
-        <CreatePost onPostSuccess={loadPosts} />
+        <CreatePost />
 
         {/* Posts Feed */}
-        <Post posts={posts} loading={loading} error={error} />
+        <Post posts={posts} />
 
         {/* Load More */}
         <div className="border-t-2 border-border p-4 text-center">
@@ -86,5 +62,6 @@ const Dashboard = () => {
       </div>
     </section>
   );
-}
-export default Dashboard;
+};
+
+export default DashboardPage;
